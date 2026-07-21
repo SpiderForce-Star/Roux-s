@@ -14,19 +14,41 @@
   --purple-dark: #2E0831;
   --gold: #D4AF37;
   --gold-hover: #E8C547;
-  --cream: #FDF8F0;
+  --bg: #FDF8F0;
+  --bg-card: #ffffff;
   --text: #1A1A1A;
-  --muted: #555;
-  --white: #ffffff;
-  --shadow: 0 4px 20px rgba(74,14,78,0.12);
+  --muted: #555555;
+  --header-bg: rgba(253, 248, 240, 0.97);
+  --border: rgba(74, 14, 78, 0.1);
+  --shadow: 0 4px 20px rgba(74, 14, 78, 0.12);
+  --hero-gradient: linear-gradient(135deg, #2E0831 0%, #4A0E4E 100%);
+  --truck-gradient: linear-gradient(135deg, #3D0A40, #5A1A5E);
 }
+
+[data-theme="dark"] {
+  --purple: #C9A0DC;
+  --purple-dark: #E8D0F0;
+  --gold: #E8C547;
+  --gold-hover: #F5D76E;
+  --bg: #121212;
+  --bg-card: #1E1E1E;
+  --text: #F0F0F0;
+  --muted: #B0B0B0;
+  --header-bg: rgba(18, 18, 18, 0.95);
+  --border: rgba(201, 160, 220, 0.2);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --hero-gradient: linear-gradient(135deg, #1A0A1E 0%, #2E0A35 100%);
+  --truck-gradient: linear-gradient(135deg, #2A0A30, #3D0A40);
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
 body {
   font-family: 'Inter', system-ui, sans-serif;
   color: var(--text);
-  background: var(--cream);
+  background: var(--bg);
   line-height:1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 h1,h2,h3 { font-family: 'Playfair Display', Georgia, serif; }
 a { text-decoration:none; color:inherit; }
@@ -35,9 +57,10 @@ img { max-width:100%; height:auto; display:block; }
 /* Header */
 header {
   position:sticky; top:0; z-index:100;
-  background: rgba(253,248,240,0.97);
+  background: var(--header-bg);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(74,14,78,0.1);
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.3s ease;
 }
 .nav-container {
   max-width:1100px; margin:0 auto; padding:0.85rem 1.25rem;
@@ -48,22 +71,44 @@ header {
   color:var(--purple); display:flex; align-items:center; gap:0.4rem;
 }
 .logo span { color:var(--gold); font-size:1.1em; }
-nav { display:flex; gap:1.5rem; align-items:center; }
+nav { display:flex; gap:1.25rem; align-items:center; }
 nav a {
-  font-size:0.92rem; font-weight:500; color:var(--purple-dark);
+  font-size:0.92rem; font-weight:500; color:var(--text);
   transition: color 0.2s;
 }
 nav a:hover { color:var(--gold); }
 .nav-cta {
-  background:var(--purple); color:white !important; padding:0.5rem 1.1rem;
+  background:var(--purple); color: var(--bg) !important; padding:0.5rem 1.1rem;
   border-radius:6px; font-weight:600; font-size:0.9rem;
 }
-.nav-cta:hover { background:var(--purple-dark); color:white !important; }
+[data-theme="dark"] .nav-cta { color: #121212 !important; }
+.nav-cta:hover { opacity: 0.9; }
+
+/* Theme Toggle */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  transition: all 0.2s;
+}
+.theme-toggle:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
 .menu-toggle { display:none; background:none; border:none; font-size:1.5rem; color:var(--purple); cursor:pointer; }
 
 /* Hero */
 .hero {
-  background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 100%);
+  background: var(--hero-gradient);
   color:white; text-align:center; padding:4.5rem 1.25rem 4rem;
   position:relative; overflow:hidden;
 }
@@ -88,7 +133,7 @@ nav a:hover { color:var(--gold); }
   font-weight:600; font-size:1rem; transition:all 0.2s; border:2px solid transparent;
 }
 .btn-gold {
-  background:var(--gold); color:var(--purple-dark);
+  background:var(--gold); color: #1A1A1A;
 }
 .btn-gold:hover { background:var(--gold-hover); transform:translateY(-2px); }
 .btn-outline {
@@ -112,7 +157,7 @@ section { padding:3.5rem 1.25rem; }
   display:grid; gap:2rem;
 }
 @media(min-width:700px){ .about-grid { grid-template-columns:1fr 1fr; align-items:center; } }
-.about-text p { margin-bottom:1rem; color:#333; }
+.about-text p { margin-bottom:1rem; color:var(--text); }
 .about-text strong { color:var(--purple); }
 
 /* Menu Highlights */
@@ -121,8 +166,8 @@ section { padding:3.5rem 1.25rem; }
   gap:1.25rem; margin-bottom:2rem;
 }
 .menu-card {
-  background:white; border-radius:12px; padding:1.5rem; box-shadow:var(--shadow);
-  border-top:4px solid var(--gold); transition:transform 0.2s;
+  background:var(--bg-card); border-radius:12px; padding:1.5rem; box-shadow:var(--shadow);
+  border-top:4px solid var(--gold); transition:transform 0.2s, background-color 0.3s;
 }
 .menu-card:hover { transform:translateY(-4px); }
 .menu-card h3 { color:var(--purple); font-size:1.2rem; margin-bottom:0.5rem; }
@@ -130,7 +175,7 @@ section { padding:3.5rem 1.25rem; }
 
 /* Food Truck */
 .truck {
-  background: linear-gradient(135deg, #3D0A40, #5A1A5E);
+  background: var(--truck-gradient);
   color:white; border-radius:16px; padding:2.5rem 1.75rem; text-align:center;
 }
 .truck h2 { color:var(--gold); margin-bottom:0.75rem; }
@@ -139,8 +184,9 @@ section { padding:3.5rem 1.25rem; }
 
 /* Happy Hour */
 .happy {
-  background:white; border:2px solid var(--gold); border-radius:12px;
+  background:var(--bg-card); border:2px solid var(--gold); border-radius:12px;
   padding:1.75rem; text-align:center; margin:2rem 0;
+  transition: background-color 0.3s;
 }
 .happy h3 { color:var(--purple); font-size:1.4rem; margin-bottom:0.4rem; }
 .happy p { color:var(--muted); }
@@ -151,17 +197,18 @@ section { padding:3.5rem 1.25rem; }
 }
 @media(min-width:700px){ .contact-grid { grid-template-columns:1fr 1fr; } }
 .info-block h3 { color:var(--purple); margin-bottom:0.75rem; font-size:1.25rem; }
-.info-block p, .info-block a { display:block; margin-bottom:0.4rem; color:#333; }
+.info-block p, .info-block a { display:block; margin-bottom:0.4rem; color:var(--text); }
 .info-block a:hover { color:var(--gold); }
 .hours-list { list-style:none; }
-.hours-list li { padding:0.25rem 0; border-bottom:1px solid #eee; display:flex; justify-content:space-between; }
+.hours-list li { padding:0.25rem 0; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; }
 .socials { display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap; align-items:center; }
 .socials a {
   width:42px; height:42px; border-radius:50%; background:var(--purple);
-  color:white; display:flex; align-items:center; justify-content:center;
+  color: var(--bg); display:flex; align-items:center; justify-content:center;
   font-weight:700; font-size:0.9rem; transition:background 0.2s;
 }
-.socials a:hover { background:var(--gold); color:var(--purple-dark); }
+[data-theme="dark"] .socials a { color: #121212; }
+.socials a:hover { background:var(--gold); color: #1A1A1A; }
 .photos-link {
   display:inline-block; margin-top:0.75rem; color:var(--purple); font-weight:600; font-size:0.95rem;
 }
@@ -171,6 +218,10 @@ section { padding:3.5rem 1.25rem; }
 footer {
   background:var(--purple-dark); color:rgba(255,255,255,0.85);
   padding:2rem 1.25rem; text-align:center; font-size:0.9rem;
+  transition: background-color 0.3s;
+}
+[data-theme="dark"] footer {
+  background: #0A0A0A;
 }
 .wsv {
   display:inline-flex; align-items:center; gap:0.6rem; margin-top:0.75rem;
@@ -183,8 +234,10 @@ footer {
 @media(max-width:700px){
   nav { display:none; }
   .menu-toggle { display:block; }
-  nav.open { display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0;
-  background:var(--cream); padding:1rem; border-bottom:1px solid #ddd; gap:0.75rem; }
+  nav.open { 
+    display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0;
+    background:var(--bg); padding:1rem; border-bottom:1px solid var(--border); gap:0.75rem; 
+  }
   .hero { padding:3.5rem 1rem; }
 }
 </style>
@@ -199,6 +252,7 @@ footer {
 <a href="#menu">Menu</a>
 <a href="#truck">Food Truck</a>
 <a href="#hours">Hours</a>
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
 <a href="https://www.toasttab.com/local/order/rouxs" class="nav-cta" target="_blank" rel="noopener">Order Now</a>
 </nav>
 </div>
@@ -236,7 +290,7 @@ footer {
 </div>
 </section>
 
-<section id="menu" style="background:white;">
+<section id="menu">
 <div class="container">
 <h2 class="section-title">Menu Highlights</h2>
 <p class="section-sub">Everything made from scratch. Full menu available for online ordering.</p>
@@ -259,7 +313,7 @@ footer {
 </div>
 </div>
 <div style="text-align:center;">
-<a href="https://www.toasttab.com/local/order/rouxs" class="btn btn-gold" target="_blank" rel="noopener" style="color:var(--purple-dark);">See Full Menu & Order Online</a>
+<a href="https://www.toasttab.com/local/order/rouxs" class="btn btn-gold" target="_blank" rel="noopener">See Full Menu & Order Online</a>
 <br><br>
 <a href="https://www.facebook.com/profile.php?id=61569876320539&sk=photos" target="_blank" rel="noopener" class="photos-link">View Food Photos on Facebook →</a>
 </div>
@@ -273,7 +327,7 @@ footer {
 <p>Bring Roux's to your event! Our food truck serves the cafe favorites across Middle Tennessee.</p>
 <p class="items">Po'boys • Gumbo (shrimp) • Crawfish Étouffée • Bread Pudding • Beignets</p>
 <p>Perfect for private parties, festivals, corporate lunches, and special events.</p>
-<a href="tel:+16154284887" class="btn btn-gold" style="color:var(--purple-dark); margin-top:0.5rem;">Call or Text 615-428-4887 to Book</a>
+<a href="tel:+16154284887" class="btn btn-gold" style="margin-top:0.5rem;">Call or Text 615-428-4887 to Book</a>
 </div>
 </div>
 </section>
@@ -306,7 +360,7 @@ footer {
 </ul>
 <p style="margin-top:1rem; font-size:0.9rem; color:var(--muted);">Happy Hour every day 3–6 PM</p>
 <br>
-<a href="https://www.toasttab.com/local/order/rouxs" class="btn btn-gold" style="color:var(--purple-dark); display:inline-block;" target="_blank" rel="noopener">Order Online Now</a>
+<a href="https://www.toasttab.com/local/order/rouxs" class="btn btn-gold" style="display:inline-block;" target="_blank" rel="noopener">Order Online Now</a>
 </div>
 </div>
 </div>
@@ -316,17 +370,44 @@ footer {
 <p>© 2026 Roux's Creole Cafe • Gallatin, Tennessee</p>
 <p style="margin-top:0.5rem; opacity:0.8;">Super Fresh • Super Fast • From Scratch Cooking</p>
 <a href="https://webbspinnervisions.net" class="wsv" target="_blank" rel="noopener">
-<img src="https://raw.githubusercontent.com/SpiderForce-Star/WebbSpinnerVisions/main/Shield-logo.png" alt="Webb Spinner Visions Shield Logo">
+<img src="https://raw.githubusercontent.com/SpiderForce-Star/WebbSpinnerVisions/main/Shield-logo.png" alt="Webb Spinner Visions Shield Logo" width="36" height="36" loading="lazy" decoding="async">
 <span>Webb Spinner Visions</span>
 </a>
 </footer>
 
 <script>
-// Simple mobile menu close on link click
-document.querySelectorAll('nav a').forEach(link => {
-link.addEventListener('click', () => {
-document.querySelector('nav').classList.remove('open');
+// Theme Toggle
+const themeToggle = document.getElementById('theme-toggle');
+const html = document.documentElement;
+
+// Load saved theme or system preference
+function getPreferredTheme() {
+  const saved = localStorage.getItem('theme');
+  if (saved) return saved;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function setTheme(theme) {
+  html.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+  themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+  themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+}
+
+// Initialize
+setTheme(getPreferredTheme());
+
+// Toggle on click
+themeToggle.addEventListener('click', () => {
+  const current = html.getAttribute('data-theme') || 'light';
+  setTheme(current === 'dark' ? 'light' : 'dark');
 });
+
+// Mobile menu close on link click
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelector('nav').classList.remove('open');
+  });
 });
 </script>
 </body>
