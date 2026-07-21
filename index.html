@@ -191,6 +191,63 @@ section { padding:3.5rem 1.25rem; }
 .happy h3 { color:var(--purple); font-size:1.4rem; margin-bottom:0.4rem; }
 .happy p { color:var(--muted); }
 
+/* Social / Instagram Section */
+.social-section {
+  background: var(--bg-card);
+}
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+.social-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.75rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.social-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+.social-card h3 {
+  color: var(--purple);
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.social-card p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+.social-btn {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+.ig-btn {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  color: white;
+}
+.ig-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+.x-btn {
+  background: #000;
+  color: white;
+}
+[data-theme="dark"] .x-btn { background: #fff; color: #000; }
+.x-btn:hover { opacity: 0.9; }
+.fb-btn {
+  background: #1877F2;
+  color: white;
+}
+.fb-btn:hover { opacity: 0.92; }
+
 /* Hours Contact */
 .contact-grid {
   display:grid; gap:2rem;
@@ -318,6 +375,7 @@ footer {
 <a href="#about">About</a>
 <a href="#menu">Menu</a>
 <a href="#truck">Food Truck</a>
+<a href="#social">Social</a>
 <a href="#hours">Hours</a>
 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
 <button class="contrast-toggle" id="contrast-toggle" aria-label="Open color contrast checker" title="Color Contrast Checker">🔍</button>
@@ -329,9 +387,7 @@ footer {
 <!-- Contrast Checker Panel -->
 <div class="contrast-panel" id="contrast-panel" role="dialog" aria-labelledby="contrast-title">
   <h3 id="contrast-title">Color Contrast Checker <button class="close-btn" id="close-contrast" aria-label="Close">×</button></h3>
-  <div id="contrast-content">
-    <!-- Populated by JS -->
-  </div>
+  <div id="contrast-content"></div>
 </div>
 
 <section class="hero">
@@ -408,6 +464,41 @@ footer {
 </div>
 </section>
 
+<!-- Instagram & Social Integration -->
+<section id="social" class="social-section">
+<div class="container">
+<h2 class="section-title">Follow Roux's</h2>
+<p class="section-sub">See the latest food photos, specials, and events from our kitchen and food truck</p>
+
+<div class="social-grid">
+  <!-- Instagram Card -->
+  <div class="social-card">
+    <h3>Instagram</h3>
+    <p>Daily food photos, beignets, po'boys, and behind-the-scenes from Gallatin.</p>
+    <a href="https://www.instagram.com/rouxscreolecafe/" class="social-btn ig-btn" target="_blank" rel="noopener">Follow @rouxscreolecafe</a>
+  </div>
+
+  <!-- X Card -->
+  <div class="social-card">
+    <h3>X (Twitter)</h3>
+    <p>Specials, seafood boils, and real-time updates from the cafe and truck.</p>
+    <a href="https://x.com/RouxsCreoleCafe" class="social-btn x-btn" target="_blank" rel="noopener">Follow @RouxsCreoleCafe</a>
+  </div>
+
+  <!-- Facebook Photos -->
+  <div class="social-card">
+    <h3>Facebook Photos</h3>
+    <p>Browse the full gallery of dishes, events, and happy customers.</p>
+    <a href="https://www.facebook.com/profile.php?id=61569876320539&sk=photos" class="social-btn fb-btn" target="_blank" rel="noopener">View Photo Gallery</a>
+  </div>
+</div>
+
+<p style="text-align:center; margin-top:2rem; color:var(--muted); font-size:0.95rem;">
+  Tip: For a full live Instagram grid on the site later, a free third-party widget (such as Elfsight, SnapWidget, or Juicer free tier) can be added easily.
+</p>
+</div>
+</section>
+
 <section id="hours">
 <div class="container">
 <h2 class="section-title">Hours, Location & Contact</h2>
@@ -425,7 +516,6 @@ footer {
 <a href="https://www.facebook.com/profile.php?id=61569876320539" target="_blank" rel="noopener" aria-label="Facebook">f</a>
 <a href="https://www.instagram.com/rouxscreolecafe/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
 </div>
-<a href="https://www.facebook.com/profile.php?id=61569876320539&sk=photos" target="_blank" rel="noopener" class="photos-link">View Photos on Facebook →</a>
 </div>
 <div class="info-block">
 <h3>Hours</h3>
@@ -467,7 +557,6 @@ function setTheme(theme) {
   localStorage.setItem('theme', theme);
   themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
   themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-  // Refresh contrast panel if open
   if (document.getElementById('contrast-panel').classList.contains('open')) {
     renderContrastChecker();
   }
@@ -490,11 +579,7 @@ function hexToRgb(hex) {
   hex = hex.replace('#', '').trim();
   if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
   const num = parseInt(hex, 16);
-  return {
-    r: (num >> 16) & 255,
-    g: (num >> 8) & 255,
-    b: num & 255
-  };
+  return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
 }
 
 function relativeLuminance({r, g, b}) {
@@ -526,7 +611,6 @@ function renderContrastChecker() {
   const gold = getCssVar('--gold');
   const bgCard = getCssVar('--bg-card');
 
-  // Hardcoded important pairs that use fixed colors
   const pairs = [
     { label: 'Body Text on Background', fg: text, bg: bg },
     { label: 'Muted Text on Background', fg: muted, bg: bg },
@@ -534,15 +618,13 @@ function renderContrastChecker() {
     { label: 'Gold Accent on Background', fg: gold, bg: bg },
     { label: 'Text on Card', fg: text, bg: bgCard },
     { label: 'Gold Button Text', fg: '#1A1A1A', bg: gold },
-    { label: 'Purple Button Text (Light)', fg: bg, bg: purple },
+    { label: 'Purple Button Text', fg: bg, bg: purple },
   ];
 
   let htmlContent = `<p style="margin-bottom:0.9rem;color:var(--muted)">Current theme: <strong style="color:var(--text)">${theme === 'dark' ? 'Dark' : 'Light'}</strong></p>`;
 
   pairs.forEach(p => {
-    // Skip invalid
     if (!p.fg || !p.bg || p.fg.includes('rgba') || p.bg.includes('rgba')) return;
-
     const ratio = contrastRatio(p.fg, p.bg);
     const ratioStr = ratio.toFixed(2) + ':1';
     const passAA = ratio >= 4.5;
@@ -565,7 +647,6 @@ function renderContrastChecker() {
   });
 
   htmlContent += `<p style="margin-top:1rem;font-size:0.8rem;color:var(--muted)">WCAG AA requires 4.5:1 for normal text and 3:1 for large text / UI components.</p>`;
-
   contrastContent.innerHTML = htmlContent;
 }
 
@@ -578,7 +659,6 @@ closeContrast.addEventListener('click', () => {
   contrastPanel.classList.remove('open');
 });
 
-// Close when clicking outside
 document.addEventListener('click', (e) => {
   if (!contrastPanel.contains(e.target) && e.target !== contrastToggle) {
     contrastPanel.classList.remove('open');
