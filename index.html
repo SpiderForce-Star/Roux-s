@@ -155,13 +155,17 @@ section { padding:3.5rem 1.25rem; }
 .info-block a:hover { color:var(--gold); }
 .hours-list { list-style:none; }
 .hours-list li { padding:0.25rem 0; border-bottom:1px solid #eee; display:flex; justify-content:space-between; }
-.socials { display:flex; gap:1rem; margin-top:1rem; }
+.socials { display:flex; gap:1rem; margin-top:1rem; flex-wrap:wrap; align-items:center; }
 .socials a {
   width:42px; height:42px; border-radius:50%; background:var(--purple);
   color:white; display:flex; align-items:center; justify-content:center;
   font-weight:700; font-size:0.9rem; transition:background 0.2s;
 }
 .socials a:hover { background:var(--gold); color:var(--purple-dark); }
+.photos-link {
+  display:inline-block; margin-top:0.75rem; color:var(--purple); font-weight:600; font-size:0.95rem;
+}
+.photos-link:hover { color:var(--gold); text-decoration:underline; }
 
 /* Footer */
 footer {
@@ -256,6 +260,8 @@ footer {
 </div>
 <div style="text-align:center;">
 <a href="https://www.toasttab.com/local/order/rouxs" class="btn btn-gold" target="_blank" rel="noopener" style="color:var(--purple-dark);">See Full Menu & Order Online</a>
+<br><br>
+<a href="https://www.facebook.com/profile.php?id=61569876320539&sk=photos" target="_blank" rel="noopener" class="photos-link">View Food Photos on Facebook →</a>
 </div>
 </div>
 </section>
@@ -289,6 +295,7 @@ footer {
 <a href="https://www.facebook.com/profile.php?id=61569876320539" target="_blank" rel="noopener" aria-label="Facebook">f</a>
 <a href="https://www.instagram.com/rouxscreolecafe/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
 </div>
+<a href="https://www.facebook.com/profile.php?id=61569876320539&sk=photos" target="_blank" rel="noopener" class="photos-link">View Photos on Facebook →</a>
 </div>
 <div class="info-block">
 <h3>Hours</h3>
