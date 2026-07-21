@@ -71,7 +71,7 @@ header {
   color:var(--purple); display:flex; align-items:center; gap:0.4rem;
 }
 .logo span { color:var(--gold); font-size:1.1em; }
-nav { display:flex; gap:1.25rem; align-items:center; }
+nav { display:flex; gap:1rem; align-items:center; }
 nav a {
   font-size:0.92rem; font-weight:500; color:var(--text);
   transition: color 0.2s;
@@ -84,8 +84,8 @@ nav a:hover { color:var(--gold); }
 [data-theme="dark"] .nav-cta { color: #121212 !important; }
 .nav-cta:hover { opacity: 0.9; }
 
-/* Theme Toggle */
-.theme-toggle {
+/* Theme + Contrast Buttons */
+.theme-toggle, .contrast-toggle {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text);
@@ -96,10 +96,10 @@ nav a:hover { color:var(--gold); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   transition: all 0.2s;
 }
-.theme-toggle:hover {
+.theme-toggle:hover, .contrast-toggle:hover {
   border-color: var(--gold);
   color: var(--gold);
 }
@@ -230,6 +230,72 @@ footer {
 .wsv:hover { opacity:0.85; }
 .wsv img { height:36px; width:auto; }
 
+/* Contrast Checker Panel */
+.contrast-panel {
+  display: none;
+  position: fixed;
+  top: 70px;
+  right: 16px;
+  width: min(360px, 92vw);
+  max-height: 80vh;
+  overflow-y: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  z-index: 200;
+  padding: 1.25rem;
+  font-size: 0.88rem;
+}
+.contrast-panel.open { display: block; }
+.contrast-panel h3 {
+  font-size: 1.15rem;
+  color: var(--purple);
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.contrast-panel .close-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: var(--muted);
+  line-height: 1;
+}
+.contrast-panel .close-btn:hover { color: var(--gold); }
+.contrast-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 0.75rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.contrast-row:last-child { border-bottom: none; }
+.contrast-label { font-weight: 500; }
+.hex-pair {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.ratio {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.pass { color: #2e7d32; }
+.fail { color: #c62828; }
+.swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+  margin-right: 4px;
+}
+
 /* Mobile */
 @media(max-width:700px){
   nav { display:none; }
@@ -239,6 +305,7 @@ footer {
     background:var(--bg); padding:1rem; border-bottom:1px solid var(--border); gap:0.75rem; 
   }
   .hero { padding:3.5rem 1rem; }
+  .contrast-panel { top: auto; bottom: 16px; right: 12px; left: 12px; width: auto; }
 }
 </style>
 </head>
@@ -253,10 +320,19 @@ footer {
 <a href="#truck">Food Truck</a>
 <a href="#hours">Hours</a>
 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+<button class="contrast-toggle" id="contrast-toggle" aria-label="Open color contrast checker" title="Color Contrast Checker">🔍</button>
 <a href="https://www.toasttab.com/local/order/rouxs" class="nav-cta" target="_blank" rel="noopener">Order Now</a>
 </nav>
 </div>
 </header>
+
+<!-- Contrast Checker Panel -->
+<div class="contrast-panel" id="contrast-panel" role="dialog" aria-labelledby="contrast-title">
+  <h3 id="contrast-title">Color Contrast Checker <button class="close-btn" id="close-contrast" aria-label="Close">×</button></h3>
+  <div id="contrast-content">
+    <!-- Populated by JS -->
+  </div>
+</div>
 
 <section class="hero">
 <div class="hero-content">
@@ -376,11 +452,10 @@ footer {
 </footer>
 
 <script>
-// Theme Toggle
+// ========== Theme Toggle ==========
 const themeToggle = document.getElementById('theme-toggle');
 const html = document.documentElement;
 
-// Load saved theme or system preference
 function getPreferredTheme() {
   const saved = localStorage.getItem('theme');
   if (saved) return saved;
@@ -392,18 +467,125 @@ function setTheme(theme) {
   localStorage.setItem('theme', theme);
   themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
   themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+  // Refresh contrast panel if open
+  if (document.getElementById('contrast-panel').classList.contains('open')) {
+    renderContrastChecker();
+  }
 }
 
-// Initialize
 setTheme(getPreferredTheme());
 
-// Toggle on click
 themeToggle.addEventListener('click', () => {
   const current = html.getAttribute('data-theme') || 'light';
   setTheme(current === 'dark' ? 'light' : 'dark');
 });
 
-// Mobile menu close on link click
+// ========== Color Contrast Checker ==========
+const contrastToggle = document.getElementById('contrast-toggle');
+const contrastPanel = document.getElementById('contrast-panel');
+const closeContrast = document.getElementById('close-contrast');
+const contrastContent = document.getElementById('contrast-content');
+
+function hexToRgb(hex) {
+  hex = hex.replace('#', '').trim();
+  if (hex.length === 3) hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  const num = parseInt(hex, 16);
+  return {
+    r: (num >> 16) & 255,
+    g: (num >> 8) & 255,
+    b: num & 255
+  };
+}
+
+function relativeLuminance({r, g, b}) {
+  const [rs, gs, bs] = [r, g, b].map(c => {
+    c = c / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+}
+
+function contrastRatio(hex1, hex2) {
+  const l1 = relativeLuminance(hexToRgb(hex1));
+  const l2 = relativeLuminance(hexToRgb(hex2));
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+
+function getCssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function renderContrastChecker() {
+  const theme = html.getAttribute('data-theme') || 'light';
+  const bg = getCssVar('--bg');
+  const text = getCssVar('--text');
+  const muted = getCssVar('--muted');
+  const purple = getCssVar('--purple');
+  const gold = getCssVar('--gold');
+  const bgCard = getCssVar('--bg-card');
+
+  // Hardcoded important pairs that use fixed colors
+  const pairs = [
+    { label: 'Body Text on Background', fg: text, bg: bg },
+    { label: 'Muted Text on Background', fg: muted, bg: bg },
+    { label: 'Purple Headings on Background', fg: purple, bg: bg },
+    { label: 'Gold Accent on Background', fg: gold, bg: bg },
+    { label: 'Text on Card', fg: text, bg: bgCard },
+    { label: 'Gold Button Text', fg: '#1A1A1A', bg: gold },
+    { label: 'Purple Button Text (Light)', fg: bg, bg: purple },
+  ];
+
+  let htmlContent = `<p style="margin-bottom:0.9rem;color:var(--muted)">Current theme: <strong style="color:var(--text)">${theme === 'dark' ? 'Dark' : 'Light'}</strong></p>`;
+
+  pairs.forEach(p => {
+    // Skip invalid
+    if (!p.fg || !p.bg || p.fg.includes('rgba') || p.bg.includes('rgba')) return;
+
+    const ratio = contrastRatio(p.fg, p.bg);
+    const ratioStr = ratio.toFixed(2) + ':1';
+    const passAA = ratio >= 4.5;
+    const passLarge = ratio >= 3;
+    const statusClass = passAA ? 'pass' : (passLarge ? 'pass' : 'fail');
+    const statusText = passAA ? 'AA Pass' : (passLarge ? 'Large Text OK' : 'Fail');
+
+    htmlContent += `
+      <div class="contrast-row">
+        <div>
+          <div class="contrast-label">${p.label}</div>
+          <div class="hex-pair">
+            <span class="swatch" style="background:${p.fg}"></span>${p.fg}
+            on
+            <span class="swatch" style="background:${p.bg}"></span>${p.bg}
+          </div>
+        </div>
+        <div class="ratio ${statusClass}">${ratioStr}<br><small>${statusText}</small></div>
+      </div>`;
+  });
+
+  htmlContent += `<p style="margin-top:1rem;font-size:0.8rem;color:var(--muted)">WCAG AA requires 4.5:1 for normal text and 3:1 for large text / UI components.</p>`;
+
+  contrastContent.innerHTML = htmlContent;
+}
+
+contrastToggle.addEventListener('click', () => {
+  const isOpen = contrastPanel.classList.toggle('open');
+  if (isOpen) renderContrastChecker();
+});
+
+closeContrast.addEventListener('click', () => {
+  contrastPanel.classList.remove('open');
+});
+
+// Close when clicking outside
+document.addEventListener('click', (e) => {
+  if (!contrastPanel.contains(e.target) && e.target !== contrastToggle) {
+    contrastPanel.classList.remove('open');
+  }
+});
+
+// Mobile menu
 document.querySelectorAll('nav a').forEach(link => {
   link.addEventListener('click', () => {
     document.querySelector('nav').classList.remove('open');
