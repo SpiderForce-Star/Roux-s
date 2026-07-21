@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roux's Creole Cafe | Authentic Creole & Cajun in Gallatin, TN</title>
+<meta name="description" content="Roux's Creole Cafe – Po'boys, Gumbo, Crawfish Étouffée, Beignets & Bread Pudding in Gallatin, TN. From-scratch cooking. Food truck available. Order online or visit us at 170 N Water Ave.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --purple: #4A0E4E;
+  --purple-dark: #2E0831;
+  --gold: #D4AF37;
+  --gold-hover: #E8C547;
+  --cream: #FDF8F0;
+  --text: #1A1A1A;
+  --muted: #555;
+  --white: #ffffff;
+  --shadow: 0 4px 20px rgba(74,14,78,0.12);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--cream);
+  line-height:1.6;
+}
+h1,h2,h3 { font-family: 'Playfair Display', Georgia, serif; }
+a { text-decoration:none; color:inherit; }
+img { max-width:100%; height:auto; display:block; }
+
+/* Header */
+header {
+  position:sticky; top:0; z-index:100;
+  background: rgba(253,248,240,0.97);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(74,14,78,0.1);
+}
+.nav-container {
+  max-width:1100px; margin:0 auto; padding:0.85rem 1.25rem;
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+}
+.logo {
+  font-family:'Playfair Display',serif; font-weight:700; font-size:1.45rem;
+  color:var(--purple); display:flex; align-items:center; gap:0.4rem;
+}
+.logo span { color:var(--gold); font-size:1.1em; }
+nav { display:flex; gap:1.5rem; align-items:center; }
+nav a {
+  font-size:0.92rem; font-weight:500; color:var(--purple-dark);
+  transition: color 0.2s;
+}
+nav a:hover { color:var(--gold); }
+.nav-cta {
+  background:var(--purple); color:white !important; padding:0.5rem 1.1rem;
+  border-radius:6px; font-weight:600; font-size:0.9rem;
+}
+.nav-cta:hover { background:var(--purple-dark); color:white !important; }
+.menu-toggle { display:none; background:none; border:none; font-size:1.5rem; color:var(--purple); cursor:pointer; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, var(--purple-dark) 0%, var(--purple) 100%);
+  color:white; text-align:center; padding:4.5rem 1.25rem 4rem;
+  position:relative; overflow:hidden;
+}
+.hero::before {
+  content:'⚜'; position:absolute; font-size:18rem; opacity:0.06;
+  top:50%; left:50%; transform:translate(-50%,-50%);
+}
+.hero-content { position:relative; max-width:800px; margin:0 auto; }
+.hero h1 {
+  font-size:clamp(2.4rem, 6vw, 3.6rem); margin-bottom:0.4rem;
+  letter-spacing:-0.02em;
+}
+.hero .tagline {
+  font-size:1.15rem; opacity:0.95; margin-bottom:0.75rem; font-weight:500;
+}
+.hero .sub {
+  font-size:1rem; opacity:0.85; margin-bottom:2rem;
+}
+.cta-row { display:flex; flex-wrap:wrap; gap:0.9rem; justify-content:center; }
+.btn {
+  display:inline-block; padding:0.85rem 1.7rem; border-radius:8px;
+  font-weight:600; font-size:1rem; transition:all 0.2s; border:2px solid transparent;
+}
+.btn-gold {
+  background:var(--gold); color:var(--purple-dark);
+}
+.btn-gold:hover { background:var(--gold-hover); transform:translateY(-2px); }
+.btn-outline {
+  background:transparent; color:white; border-color:rgba(255,255,255,0.6);
+}
+.btn-outline:hover { background:rgba(255,255,255,0.12); border-color:white; }
+
+/* Sections */
+section { padding:3.5rem 1.25rem; }
+.container { max-width:1000px; margin:0 auto; }
+.section-title {
+  text-align:center; font-size:clamp(1.8rem,4vw,2.4rem);
+  color:var(--purple); margin-bottom:0.5rem;
+}
+.section-sub {
+  text-align:center; color:var(--muted); max-width:600px; margin:0 auto 2.2rem;
+}
+
+/* About */
+.about-grid {
+  display:grid; gap:2rem;
+}
+@media(min-width:700px){ .about-grid { grid-template-columns:1fr 1fr; align-items:center; } }
+.about-text p { margin-bottom:1rem; color:#333; }
+.about-text strong { color:var(--purple); }
+
+/* Menu Highlights */
+.menu-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1.25rem; margin-bottom:2rem;
+}
+.menu-card {
+  background:white; border-radius:12px; padding:1.5rem; box-shadow:var(--shadow);
+  border-top:4px solid var(--gold); transition:transform 0.2s;
+}
+.menu-card:hover { transform:translateY(-4px); }
+.menu-card h3 { color:var(--purple); font-size:1.2rem; margin-bottom:0.5rem; }
+.menu-card p { font-size:0.92rem; color:var(--muted); }
+
+/* Food Truck */
+.truck {
+  background: linear-gradient(135deg, #3D0A40, #5A1A5E);
+  color:white; border-radius:16px; padding:2.5rem 1.75rem; text-align:center;
+}
+.truck h2 { color:var(--gold); margin-bottom:0.75rem; }
+.truck p { opacity:0.95; margin-bottom:1.25rem; max-width:560px; margin-left:auto; margin-right:auto; }
+.truck .items { font-weight:500; margin-bottom:1.5rem; opacity:0.9; }
+
+/* Happy Hour */
+.happy {
+  background:white; border:2px solid var(--gold); border-radius:12px;
+  padding:1.75rem; text-align:center; margin:2rem 0;
+}
+.happy h3 { color:var(--purple); font-size:1.4rem; margin-bottom:0.4rem; }
+.happy p { color:var(--muted); }
+
+/* Hours Contact */
+.contact-grid {
+  display:grid; gap:2rem;
+}
+@media(min-width:700px){ .contact-grid { grid-template-columns:1fr 1fr; } }
+.info-block h3 { color:var(--purple); margin-bottom:0.75rem; font-size:1.25rem; }
+.info-block p, .info-block a { display:block; margin-bottom:0.4rem; color:#333; }
+.info-block a:hover { color:var(--gold); }
+.hours-list { list-style:none; }
+.hours-list li { padding:0.25rem 0; border-bottom:1px solid #eee; display:flex; justify-content:space-between; }
+.socials { display:flex; gap:1rem; margin-top:1rem; }
+.socials a {
+  width:42px; height:42px; border-radius:50%; background:var(--purple);
+  color:white; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:0.9rem; transition:background 0.2s;
+}
+.socials a:hover { background:var(--gold); color:var(--purple-dark); }
+
+/* Footer */
+footer {
+  background:var(--purple-dark); color:rgba(255,255,255,0.85);
+  padding:2rem 1.25rem; text-align:center; font-size:0.9rem;
+}
+.wsv {
+  display:inline-flex; align-items:center; gap:0.6rem; margin-top:0.75rem;
+  color:white; font-weight:500; transition:opacity 0.2s;
+}
+.wsv:hover { opacity:0.85; }
+.wsv img { height:36px; width:auto; }
+
+/* Mobile */
+@media(max-width:700px){
+  nav { display:none; }
+  .menu-toggle { display:block; }
+  nav.open { display:flex; flex-direction:column; position:absolute; top:100%; left:0; right:0;
+  background:var(--cream); padding:1rem; border-bottom:1px solid #ddd; gap:0.75rem; }
+  .hero { padding:3.5rem 1rem; }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="nav-container">
+<a href="#" class="logo">Roux's <span>⚜</span> Creole Cafe</a>
+<button class="menu-toggle" aria-label="Menu" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+<nav>
+<a href="#about">About</a>
+<a href="#menu">Menu</a>
+<a href="#truck">Food Truck</a>
+<a href="#hours">Hours</a>
+<a href="https://www.toasttab.com/local/order/rouxs" class="nav-cta" target="_blank" rel="noopener">Order Now</a>
+</nav>
+</div>
+</header>
+
+<section class="hero">
+<div class="hero-content">
+<h1>Roux's Creole Cafe</h1>
+<p class="tagline">Authentic New Orleans Flavors in Gallatin, TN</p>
+<p class="sub">Po'boys • Gumbo • Crawfish Étouffée • Beignets & Bread Pudding<br>From Scratch. Super Fresh. Super Fast. Food Truck Available.</p>
+<div class="cta-row">
+<a href="https://www.toasttab.com/local/order/rouxs" class="btn btn-gold" target="_blank" rel="noopener">Order Pickup or Delivery</a>
+<a href="tel:+16154284887" class="btn btn-outline">Book the Food Truck</a>
+</div>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+<h2 class="section-title">Our Story</h2>
+<p class="section-sub">Family-owned Creole & Cajun cooking made from scratch in downtown Gallatin</p>
+<div class="about-grid">
+<div class="about-text">
+<p><strong>Roux’s Creole Cafe</strong> brings the soulful flavors of New Orleans and Louisiana to the heart of Gallatin. Owned by Chef James and Holley Lampley, we opened on Mardi Gras 2025 with one mission: authentic Creole and Cajun cuisine made from scratch — no shortcuts.</p>
+<p>James is a trained chef with an A.O.S. in Culinary Arts and a B.S. in Hotel/Restaurant Management from the New England Culinary Institute, plus advanced training in Switzerland, Italy, France, Germany, and Monte Carlo. After years at this same location, he and Holley transformed it into a true Creole destination focused on the freshest ingredients and real Louisiana tradition.</p>
+<p>We’re a family operation. Our kids help out, Eddie Pollard keeps operations running smoothly, and Sofia Goodall is our beignet queen and bread pudding specialist. Come taste the difference that care makes.</p>
+</div>
+<div>
+<div class="happy">
+<h3>Happy Hour Daily 3–6 PM</h3>
+<p>Food specials + Abita beers with Roux’s Rewards tokens.<br>Earn tokens and redeem for drinks, beignets, or discounts.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="menu" style="background:white;">
+<div class="container">
+<h2 class="section-title">Menu Highlights</h2>
+<p class="section-sub">Everything made from scratch. Full menu available for online ordering.</p>
+<div class="menu-grid">
+<div class="menu-card">
+<h3>Po'boys & Muffulettas</h3>
+<p>Shrimp, Andouille, Catfish, Debris, Cuban, Cajun Club, classic deli options and the famous Muffuletta.</p>
+</div>
+<div class="menu-card">
+<h3>Bayou Favorites</h3>
+<p>Shrimp Gumbo, Gumbo YA YA, Crawfish Étouffée, Red Beans & Rice, Fried Green Tomatoes.</p>
+</div>
+<div class="menu-card">
+<h3>Combos</h3>
+<p>Big Easy, Zapp's, and F.G.B. combos — perfect for a full meal with sides and a drink.</p>
+</div>
+<div class="menu-card">
+<h3>Desserts</h3>
+<p>Warm Bread Pudding (our 1830s-inspired recipe), Fresh Beignets, and Bananas Foster Cake.</p>
+</div>
+</div>
+<div style="text-align:center;">
+<a href="https://www.toasttab.com/local/order/rouxs" class="btn btn-gold" target="_blank" rel="noopener" style="color:var(--purple-dark);">See Full Menu & Order Online</a>
+</div>
+</div>
+</section>
+
+<section id="truck">
+<div class="container">
+<div class="truck">
+<h2>Food Truck</h2>
+<p>Bring Roux's to your event! Our food truck serves the cafe favorites across Middle Tennessee.</p>
+<p class="items">Po'boys • Gumbo (shrimp) • Crawfish Étouffée • Bread Pudding • Beignets</p>
+<p>Perfect for private parties, festivals, corporate lunches, and special events.</p>
+<a href="tel:+16154284887" class="btn btn-gold" style="color:var(--purple-dark); margin-top:0.5rem;">Call or Text 615-428-4887 to Book</a>
+</div>
+</div>
+</section>
+
+<section id="hours">
+<div class="container">
+<h2 class="section-title">Hours, Location & Contact</h2>
+<div class="contact-grid">
+<div class="info-block">
+<h3>Visit Us</h3>
+<p><strong>170 North Water Avenue</strong><br>Gallatin, TN 37066</p>
+<p><a href="https://maps.google.com/?q=170+N+Water+Ave,+Gallatin,+TN+37066" target="_blank" rel="noopener">Get Directions →</a></p>
+<br>
+<h3>Call</h3>
+<p><a href="tel:+16154516961">Restaurant: 615-451-6961</a></p>
+<p><a href="tel:+16154284887">Food Truck & Events: 615-428-4887</a></p>
+<p><a href="mailto:info@rouxscreolecafe.com">info@rouxscreolecafe.com</a></p>
+<div class="socials">
+<a href="https://www.facebook.com/profile.php?id=61569876320539" target="_blank" rel="noopener" aria-label="Facebook">f</a>
+<a href="https://www.instagram.com/rouxscreolecafe/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+</div>
+</div>
+<div class="info-block">
+<h3>Hours</h3>
+<ul class="hours-list">
+<li><span>Monday – Thursday</span> <span>11 AM – Last seating 7:30 PM</span></li>
+<li><span>Friday – Saturday</span> <span>11 AM – Last seating 8:30 PM</span></li>
+<li><span>Sunday</span> <span>11 AM – Last seating 7:30 PM</span></li>
+</ul>
+<p style="margin-top:1rem; font-size:0.9rem; color:var(--muted);">Happy Hour every day 3–6 PM</p>
+<br>
+<a href="https://www.toasttab.com/local/order/rouxs" class="btn btn-gold" style="color:var(--purple-dark); display:inline-block;" target="_blank" rel="noopener">Order Online Now</a>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<p>© 2026 Roux's Creole Cafe • Gallatin, Tennessee</p>
+<p style="margin-top:0.5rem; opacity:0.8;">Super Fresh • Super Fast • From Scratch Cooking</p>
+<a href="https://webbspinnervisions.net" class="wsv" target="_blank" rel="noopener">
+<img src="https://raw.githubusercontent.com/SpiderForce-Star/WebbSpinnerVisions/main/Shield-logo.png" alt="Webb Spinner Visions Shield Logo">
+<span>Webb Spinner Visions</span>
+</a>
+</footer>
+
+<script>
+// Simple mobile menu close on link click
+document.querySelectorAll('nav a').forEach(link => {
+link.addEventListener('click', () => {
+document.querySelector('nav').classList.remove('open');
+});
+});
+</script>
+</body>
+</html>
