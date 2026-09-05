@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 148" role="img" aria-label="Webb Spinner Visions shield">
+  <defs>
+    <linearGradient id="wsv-face" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14324a"/>
+      <stop offset="1" stop-color="#0b1c2c"/>
+    </linearGradient>
+    <linearGradient id="wsv-gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e4c65a"/>
+      <stop offset="1" stop-color="#c9a227"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#wsv-gold)" d="M60 4 L112 20 v54 c0 38-26 62-52 70 C34 136 8 112 8 74 V20 Z"/>
+  <path fill="url(#wsv-face)" d="M60 12 L104 26 v46 c0 33-22 54-44 61 C38 126 16 105 16 72 V26 Z"/>
+  <g fill="none" stroke="#c9a227" stroke-width="1.6" opacity="0.9">
+    <circle cx="60" cy="62" r="10"/>
+    <circle cx="60" cy="62" r="20"/>
+    <circle cx="60" cy="62" r="30"/>
+    <path d="M60 32 v60 M30 62 h60 M39 41 L81 83 M81 41 L39 83"/>
+  </g>
+  <path fill="#c9a227" d="M60 50.5 L63.4 59.2 72.6 59.8 65.6 66 67.8 75 60 70.2 52.2 75 54.4 66 47.4 59.8 56.6 59.2 Z"/>
+  <text x="60" y="118" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="700" fill="#e4c65a" letter-spacing="3">WSV</text>
+</svg>
