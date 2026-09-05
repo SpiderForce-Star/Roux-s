@@ -1,22 +1,24 @@
-# Roux's Creole Cafe Website
+# Roux's Creole Cafe — 2026 redesign
 
-Professional one-page elegant website for Roux's Creole Cafe in Gallatin, TN.
+Webb Spinner Visions build for Chef James Lampley (Gallatin, TN).
 
-Built by Webb Spinner Visions for Chef James & Holley Lampley.
+**Do not merge this branch into `main` until James signs off.**
+`main` is the live GitHub Pages static site. The July 2026 Pages files are in `archive/pages-2026-07/`.
 
-## Live Site
-After enabling GitHub Pages (Settings → Pages → Deploy from branch: main / root), the site will be available at:
+This branch is the Grok Build source: TanStack Start + React + Tailwind.
 
-**https://spiderforce-star.github.io/Roux-s/**
+## What is live in Grok Build
 
-## Features
-- Elegant mobile-first design (deep purple + gold)
-- Strong Order Now + Book Food Truck CTAs
-- Authentic About section with Chef James credentials
-- Menu highlights
-- Dedicated Food Truck section (Po'boys, Gumbo, Crawfish Étouffée, Bread Pudding, Beignets)
-- Hours, location, contact, Happy Hour
-- Footer credit linking to webbspinnervisions.net
+- Dark plum / antique gold cinematic one-page cafe site
+- Separate **About the Chef** page (`/chef`) — Chef James Lampley only
+- Holley is not named anywhere
+- Favorites: “A few of our favorites” / “Our customers love them”
+- Real purple trailer on the food-truck booking block
+- Footer: Webb Spinner Visions shield → https://webbspinnervisions.net
 
-## How to edit
-Simply edit `index.html` and commit the changes. The site updates automatically on GitHub Pages.
+## Contacts
+
+- 170 N Water Ave, Gallatin, TN 37066
+- Restaurant: (615) 451-6961
+- Truck bookings: (615) 428-4887
+- Order: https://www.toasttab.com/local/order/rouxs
