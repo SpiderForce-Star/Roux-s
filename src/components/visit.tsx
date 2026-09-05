@@ -23,8 +23,8 @@ export function Visit() {
               className="group relative block min-h-80 overflow-hidden"
             >
               <img
-                src="/images/deck.jpg"
-                alt="Park in the rear at Roux's — the covered back deck at 170 North Water Avenue"
+                src="/images/deck-upper.jpg"
+                alt="Park in the rear at Roux's — the two-level back deck at 170 North Water Avenue"
                 className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-plum-deep/50" />
@@ -59,7 +59,7 @@ export function Visit() {
                 </p>
                 <p className="mt-1 text-sm text-muted">
                   The front curb is short. Come around back — that is the lot,
-                  and the covered deck.
+                  and the two-level deck.
                 </p>
                 <a
                   href={LINKS.maps}
