@@ -104,6 +104,12 @@
     );
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video {
+      display: none;
+    }
+  }
+
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;

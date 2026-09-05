@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MapPin, Clock } from "lucide-react";
 import { LINKS, PLACE } from "@/data/restaurant";
 import { getHouseStatus } from "@/lib/hours";
@@ -6,10 +6,29 @@ import { FleurDeLis } from "./marks";
 
 export function Hero() {
   const [status, setStatus] = useState(() => getHouseStatus());
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const id = window.setInterval(() => setStatus(getHouseStatus()), 60_000);
     return () => window.clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => {
+      if (mq.matches) {
+        video.pause();
+        video.classList.add("hidden");
+      } else {
+        video.classList.remove("hidden");
+        video.play().catch(() => {});
+      }
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
   }, []);
 
   return (
@@ -22,6 +41,19 @@ export function Hero() {
         alt=""
         className="absolute inset-0 size-full object-cover object-center"
       />
+      <video
+        ref={videoRef}
+        className="hero-video absolute inset-0 size-full object-cover object-center"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster="/images/hero.jpg"
+        aria-hidden="true"
+      >
+        <source src="/videos/hero.mp4" type="video/mp4" />
+      </video>
       <div className="hero-scrim absolute inset-0" aria-hidden="true" />
       <div className="hero-vignette absolute inset-0" aria-hidden="true" />
 
@@ -81,18 +113,20 @@ export function Hero() {
         </div>
 
         <dl
-          className="rise-in mt-6 hidden flex-wrap gap-x-8 gap-y-3 text-sm text-cream/75 sm:mt-10 sm:flex"
+          className="rise-in mt-5 flex flex-col gap-2 text-sm text-cream/80 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-8"
           style={{ animationDelay: "280ms" }}
         >
           <div className="flex items-center gap-2">
-            <MapPin className="size-4 text-gold" aria-hidden="true" />
+            <MapPin className="size-4 shrink-0 text-gold" aria-hidden="true" />
             <dt className="sr-only">Address</dt>
             <dd>
               {PLACE.street}, {PLACE.city}
+              <span className="mx-2 text-gold/70">·</span>
+              <span className="font-medium text-gold">Parking in the rear</span>
             </dd>
           </div>
           <div className="flex items-center gap-2">
-            <Clock className="size-4 text-gold" aria-hidden="true" />
+            <Clock className="size-4 shrink-0 text-gold" aria-hidden="true" />
             <dt className="sr-only">Happy Hour</dt>
             <dd>Happy Hour daily 3–6 PM</dd>
           </div>

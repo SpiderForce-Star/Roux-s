@@ -6,6 +6,7 @@ import { MenuSection } from "@/components/menu-section";
 import { Story } from "@/components/story";
 import { HappyHour } from "@/components/happy-hour";
 import { Truck } from "@/components/truck";
+import { Deck } from "@/components/deck";
 import { Visit } from "@/components/visit";
 import { Footer } from "@/components/footer";
 import { LINKS, PLACE } from "@/data/restaurant";
@@ -62,6 +63,7 @@ function Home() {
         <Story />
         <HappyHour />
         <Truck />
+        <Deck />
         <Visit />
       </main>
       <Footer />

@@ -11,6 +11,7 @@ const NAV = [
   { href: "/chef", label: "The Chef", to: "/chef" as const },
   { href: "/#happy-hour", label: "Happy Hour" },
   { href: "/#truck", label: "Food Truck" },
+  { href: "/#deck", label: "The Deck" },
   { href: "/#visit", label: "Visit" },
 ];
 
@@ -55,7 +56,7 @@ export function Header({ solid = false }: { solid?: boolean }) {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-4 xl:gap-7 lg:flex" aria-label="Primary">
           {NAV.map((item) =>
             item.to ? (
               <Link

@@ -23,8 +23,8 @@ export function Visit() {
               className="group relative block min-h-80 overflow-hidden"
             >
               <img
-                src="/images/hero.jpg"
-                alt="Downtown Gallatin — Roux's Creole Cafe at 170 North Water Avenue"
+                src="/images/deck.jpg"
+                alt="Park in the rear at Roux's — the covered back deck at 170 North Water Avenue"
                 className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-plum-deep/50" />
@@ -36,6 +36,7 @@ export function Visit() {
                   170 North Water Avenue
                 </p>
                 <p className="mt-1 text-cream/80">Gallatin, Tennessee 37066</p>
+                <p className="mt-3 font-medium text-gold">Parking in the rear</p>
                 <span className="mt-4 inline-flex min-h-11 w-fit items-center rounded-full bg-gold px-5 text-sm font-semibold text-plum-deep">
                   Open in Google Maps
                 </span>
@@ -52,6 +53,13 @@ export function Visit() {
                   {PLACE.street}
                   <br />
                   {PLACE.city}
+                </p>
+                <p className="mt-2 font-medium text-plum">
+                  Parking in the rear
+                </p>
+                <p className="mt-1 text-sm text-muted">
+                  The front curb is short. Come around back — that is the lot,
+                  and the covered deck.
                 </p>
                 <a
                   href={LINKS.maps}
